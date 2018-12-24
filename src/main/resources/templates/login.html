@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+	<head th:replace="common/copy::common_head(~{::title})">
+		<title>登录页面</title>
+	</head>
+	<body style="background-color: #007DDB;">
+		<div align="center" style="margin-top: 150px;">
+			<form id="loginForm" method="post">
+				<div class="easyui-panel" style="width:400px;padding:50px 60px">
+					<div align="center" style="margin-bottom:20px">
+						<img src="img/b.png" th:href="@{/img/loginHead.png}" />
+					</div>
+					<div style="margin-bottom:20px">
+						<input name="name" class="easyui-textbox" prompt="Username" iconWidth="28" style="width:100%;height:34px;padding:10px;"
+							   data-options="required:true,
+											missingMessage:'用户名不能为空！',
+											validateOnCreate:false"  />
+					</div>
+					<div style="margin-bottom:20px">
+						<input name="password" class="easyui-passwordbox" prompt="Password" iconWidth="28" style="width:100%;height:34px;padding:10px"
+							   data-options="required:true,
+											missingMessage:'密码不能为空！',
+											validateOnCreate:false" />
+					</div>
+					<div align="center">
+						<a id="loginbtn" class="easyui-linkbutton c7" style="width: 100px;height: 30px;">登录</a>
+					</div>
+				</div>
+			</form>
+			<script type="text/javascript">
+				$("#loginbtn").click(function(){
+						$.messager.progress();	// 显示进度条
+						$('#loginForm').form('submit', {
+								url: '[[@{/user/dologin.do}]]',
+								onSubmit: function(){
+									var isValid = $(this).form('validate');
+									if (!isValid){
+										$.messager.progress('close');	// 如果表单是无效的则隐藏进度条
+									}
+									return isValid;	// 返回false终止表单提交
+								},
+								success: function(data){
+								    console.log(data);
+									$.messager.progress('close');	// 如果提交成功则隐藏进度条
+								}
+						});
+                })
+			</script>
+		</div>
+	</body>
+</html>
