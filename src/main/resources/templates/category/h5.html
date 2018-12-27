@@ -1,0 +1,340 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/copy::common_head(~{::title})">
+	<title>线上H5</title>
+</head>
+<body>
+	<div class="easyui-panel" fit=true>
+		<table id="dg" class="easyui-datagrid"  style="width:100%;height:100%"
+				data-options="
+					idField:'h5Id',
+					iconCls: 'fa fa-edit fa-lg',
+					url: 'list.do',
+					method:'get',
+					singleSelect:false,
+					selectOnCheck:true,
+					checkOnSelect:true,
+					rownumbers:true,
+					pagination : true,
+					fitColumns:true,
+					striped:true,
+					toolbar:toolbar,
+					onDblClickRow:function(index, row){
+						saveOrUpdate = false;
+						//清空表单数据
+						$('#form1').form('reset');
+						//修改标题
+						$('#dlgData').dialog({
+							title: '修改H5案例',
+							iconCls:'fa fa-pencil',
+						});
+						//填充数据
+						$('#form1').form('load',row);
+						//图片回显
+						$('#img1').attr('src','http://www.ei-marketing.cn/web_save/'+row.h5Img)
+						$('#img2').attr('src','http://www.ei-marketing.cn/web_save/'+row.h5Code)
+						//开窗
+						$('#dlgData').dialog('open')
+					}
+				">
+			<thead>
+				<tr>
+					<th data-options="field:'h5Id',checkbox:true"></th>
+					<!--<th  data-options="field:'h5Id',width:80,align:'center'">ID</th>-->
+					<th data-options="field:'h5Title',width:80,align:'center'">标题</th>
+					<th data-options="field:'h5Sort',width:80,align:'center'">排序</th>
+					<th data-options="field:'h5State',width:60,align:'center'">案例说明</th>
+					<th data-options="field:'h5Time',width:60,align:'center'">案例时间</th>
+					<th data-options="field:'h5Img',width:100,align:'center',formatter:function(value,row,index){
+							return '<img src=http://www.ei-marketing.cn/web_save/'+value +' height=58>'
+					}" >图片</th>
+					<th data-options="field:'h5Code',width:80,align:'center',formatter:function(value,row,index){
+							return '<img src=http://www.ei-marketing.cn/web_save/'+value +' height=58>'
+					}">二维码</th>
+				</tr>
+			</thead>
+		</table>
+	</div>
+	<!--添加窗口-->
+		<!--对话框-->
+			<div id="dlgData" class="easyui-dialog" title="H5案例添加" style="padding:10px"
+			data-options="
+				title:'sedfds',
+				iconCls: 'fa fa-plus-square fa-1x',
+				closed:true,
+				closable:true,
+				openAnimation:'slide',
+				openDuration:500,
+				modal:true,
+				maximized:true,
+				buttons:'#controlBtn'
+				">
+				<!--中心内容-->
+				<form id="form1" method="post">
+					<div align="center" style="margin-top: 5px;">
+						<div class="easyui-panel" style="width:400px;padding:10px 10px;border: 0px;">
+							<div style="margin-bottom:20px" >
+								<!--<label>h5Id</label>-->
+								<input name="h5Id" type="hidden"  prompt="itemid"   style="width:100%;height:34px;padding:10px;">
+							</div>
+							<div style="margin-bottom:20px">
+								<label>文章标题</label>
+								<br />
+								<br />
+								<input name="h5Title"  class="easyui-textbox"  prompt="输入文章标题" iconWidth="28" style="width:100%;height:34px;padding:10px"
+									   data-options="required:true"/>
+							</div>
+							<div style="margin-bottom:20px">
+								<label>排序（按照排序数字大小排序）</label>
+								<br />
+								<br />
+								<input name="h5Sort" class="easyui-textbox"  prompt="输入排序" iconWidth="28"  style="width:100%;height:34px;padding:10px"
+									   data-options="required:true,validType:'number'"/>
+							</div>
+							<div style="margin-bottom:20px">
+								<label>文章描述</label>
+								<br />
+								<br />
+								<input name="h5State" class="easyui-textbox"   prompt="输入文章描述" iconWidth="28"  style="width:100%;height:100px;padding:10px"
+								data-options="multiline:true,required:true,validateOnCreate:false"/>
+							</div>
+							<!--详细时间日期-->
+							<div style="margin-bottom:20px">
+								<label >案例时间日期</label>
+								<br />
+								<br />
+								<input name="h5Time" editable=false class="easyui-datebox"  prompt="选择案例时间" iconWidth="28"  style="width:100%;height:34px;padding:10px"
+									   data-options="required:true,validateOnCreate:false"/>
+							</div>
+							<!--h5图片-->
+							<div  style="margin-bottom:20px">
+								<label>h5图片</label>
+								<br />
+								<br />
+								<img id="img1" src="img/b.png"  border="2" width="120" height="120"/>
+								<input id="img1Input" name="h5Img" type="hidden"   prompt="unitcost" iconWidth="28"  style="width:80%;height:34px;padding:10px">
+								<br />
+								<a id="uploadimg1" class="easyui-linkbutton c1" iconCls="fa fa-cloud-upload fa-lg ">点我上传</a>
+							</div>
+							<!--二维码-->
+							<div  style="margin-bottom:20px">
+								<label>二维码图片</label>
+								<br />
+								<br />
+								<img id="img2" src="img/b.png" border="2" width="120" height="120"/>
+								<input id="img2Input" name="h5Code" type="hidden"   prompt="unitcost" iconWidth="28"  style="width:80%;height:34px;padding:10px">
+								<br />
+								<a id="uploadimg2" class="easyui-linkbutton c1" iconCls="fa fa-cloud-upload fa-lg ">点我上传</a>
+							</div>
+							<div class="menu-sep"></div>
+							<div id="controlBtn" align="center">
+								<a id="surebtn" style="margin-left: 0px;" class="easyui-linkbutton c1">
+									<i class="fa fa-pencil fa-lg"></i>&nbsp;&nbsp;确认
+								</a>
+								<a id="closebtn" style="margin-left: 50px;" class="easyui-linkbutton c5">
+									<i class="fa fa-mail-reply-all fa-lg"></i>&nbsp;&nbsp;关闭 
+								</a>
+							</div>
+						</div>
+					</div>
+				</form>
+				<!--中心内容结束-->
+			</div>
+			<style>
+				/*秘钥颜色*/
+		    	.fa-key{
+		    		color: #DE8033;
+		    	}
+		    </style>
+	<!--添加窗口-->
+	<script type="text/javascript">
+		//自己封装上传方法
+		//一键上传 共用方法
+		function myUpload(btnId,imgId,imgInputId) {
+                $(btnId).upload({
+                    action: '[[@{/upload/img.do}]]',
+                    name: 'Img',
+					//提交之前
+                    onSubmit: function (self, element) {
+                        $.messager.progress();
+                    },
+					//提交完成后
+                    onComplete: function (data, self, element) {
+                        $.messager.progress('close');
+                        var json = JSON.parse(data);
+                        //获取路径，将页面中图片的src 修改掉
+                        $(imgId).attr('src',json.url);//根据页面img 标签调整
+                        $(imgInputId).val(json.img);//json.h5_img名字固定，不应更改,选择的是 对应隐藏的input便签
+                        if(json.flog == 0){
+                            $.messager.alert("提示信息","图片导入成功!","info");
+                        }else{
+                            $.messager.alert("提示信息","图片导入失败!","info");
+                        }
+                    }
+					/* 结尾 */
+                })
+        }
+		//一键上传结束
+//		自己封装上传方法
+
+		//验证数字规则
+        $.extend($.fn.validatebox.defaults.rules, {
+            number: {
+                validator: function(value, param){
+                    var reg = /^\d{3}$/;
+                    return reg.test(value);
+                },
+                message: '请务必输入3位数字.'
+            }
+        });
+
+
+
+        $(function(){
+			//确定按钮
+			$("#surebtn").click(function(){
+				$.messager.progress();	// 显示进度条
+				$('#form1').form('submit', {
+					url: saveOrUpdate?'[[@{/category/h5/save.do}]]':'[[@{/category/h5/update.do}]]',//true--保存，false--更新
+					onSubmit: function(){
+						var isValid = $(this).form('validate');
+						if (!isValid){
+							$.messager.progress('close');	// 如果表单是无效的则隐藏进度条
+						}
+						return isValid;	// 返回false终止表单提交
+					}, 
+					success: function(data){
+                        $.messager.progress('close');	// 如果提交成功则隐藏进度条
+                        var json = JSON.parse(data);
+						if(json.code == 0){
+						    if(saveOrUpdate){
+                                $.messager.alert("提示","保存成功");
+							}else{
+                                $.messager.alert("提示","修改成功");
+							}
+							//关闭窗口
+                            $("#dlgData").dialog("close");
+							//刷新表格
+							$('#dg').datagrid('reload');
+                        }else{
+//                            $("#dlgData").dialog("close");
+                            if(saveOrUpdate){
+                                $.messager.alert("提示","保存失败");
+                            }else{
+                                $.messager.alert("提示","修改失败");
+                            }
+						}
+					}
+				});
+			});
+			//关闭按钮
+			$("#closebtn").click(function(){
+				$("#dlgData").dialog("close")
+				//清空图片
+                $('#img1').attr('src','http://app.i-mineral.cn/eim_pceim_manager/')
+                $('#img2').attr('src','http://app.i-mineral.cn/eim_pceim_manager/')
+			})
+			//一键上传
+            $('#uploadimg1').mouseover(function(){
+                	myUpload('#uploadimg1','#img1','#img1Input');
+            });
+            $('#uploadimg2').mouseover(function(){
+                	myUpload('#uploadimg2','#img2','#img2Input');
+            });
+            //一键上传结束
+
+        });//$ function 结束
+
+		//保存或者删除标志
+		var saveOrUpdate = true;
+		//数据表格工具栏
+		var toolbar = [{
+			text:'添加',
+			iconCls:'fa fa-plus-square fa-lg',
+			handler:function(){
+				saveOrUpdate = true;
+				$("#form1").form('reset');
+				$("#dlgData").dialog({
+						title: '添加H5案例',
+						iconCls:'fa fa-plus-square',
+				})
+				$("#dlgData").dialog('open',true)
+			}
+		},{
+			text:'删除',
+			iconCls:'fa fa-trash-o fa-lg',
+			handler:function(){
+				var cklist = $("#dg").datagrid('getSelections');
+				var length = cklist.length;
+				if(length == 0){
+					$.messager.alert("提示","请至少选择一行进行删除");
+				}else{
+					$.messager.confirm("提示","你确定要删除吗？",function(r){
+						if(r){
+							var arr = "";
+							for(var i = 0 ; i< length ; i++){
+								arr += cklist[i].h5Id+","
+							}
+							var idList = arr.substring(0,arr.length-1);
+                            $.ajax({
+                                type: "POST",
+                                url: "[[@{/category/h5/delete.do}]]",
+                                data: "idlist="+idList,
+                                success: function(msg){
+                                    if(msg.code == 0){
+                                        $.messager.alert("提示信息","删除成功!","info");
+                                        //重载数据表格
+                                        $('#dg').datagrid('reload')
+									}else{
+                                        $.messager.alert("提示信息","删除失败!","info");
+									}
+                                }
+                            });
+						}
+					})
+				}
+			}
+		},{
+			text:'修改',
+			iconCls:'fa fa-pencil fa-lg',
+			handler:function(){
+				saveOrUpdate = false;
+				var cklist = $("#dg").datagrid('getSelections');
+				var length = cklist.length;
+				if(length == 0){
+					$.messager.alert("提示","请选择一行进行修改");
+				}else if(length > 1){
+					$.messager.alert("提示","只能选择一行进行删除");
+				}else{
+					//情况表单数据
+					$("#form1").form('reset');
+					//修改标题
+					$("#dlgData").dialog({
+						title: '修改H5案例',
+						iconCls:'fa fa-pencil',
+					})
+					//填充数据
+					$("#form1").form('load',cklist[0]);
+                    //图片回显
+                    $('#img1').attr('src','http://www.ei-marketing.cn/web_save/'+cklist[0].h5Img)
+                    $('#img2').attr('src','http://www.ei-marketing.cn/web_save/'+cklist[0].h5Code)
+					//开窗
+					$("#dlgData").dialog('open')
+					
+				}
+				
+			}
+		},{
+			text:'查询',
+			iconCls:'fa fa-search-plus fa-lg',
+			handler:function(){alert('查询')}
+		},{
+            text:'H5案例页面',
+            iconCls:'fa fa-external-link fa-lg',
+            handler:function(){
+                window.open("http://app.i-mineral.cn/eim_staticpage/online.html");
+            }
+        }];
+	</script>
+</body>
+</html>

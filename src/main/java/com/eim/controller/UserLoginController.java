@@ -1,5 +1,6 @@
 package com.eim.controller;
 
+import com.eim.Vo.ResultVo;
 import com.eim.dataObject.User;
 import com.eim.exception.WebException;
 import com.eim.service.UserLoginService;
@@ -12,6 +13,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Map;
 
 /**
@@ -33,14 +35,15 @@ public class UserLoginController {
 
     @ResponseBody
     @PostMapping("/dologin.do")
-    public String dologin(User user, Map map){
+    public ResultVo dologin(User user, HttpServletRequest request, Map map){
         try {
             userLoginService.checkUser(user);
         } catch (WebException e) {
             e.printStackTrace();
-            return ResultVoUtil.error().toString();
+            return ResultVoUtil.error();
         }
-        return ResultVoUtil.success().toString();
+        request.getSession().setAttribute("user",user.getName());
+        return ResultVoUtil.success();
     }
 
 }

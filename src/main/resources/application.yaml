@@ -26,6 +26,14 @@ spring:
 #    thymeleaf缓存
   thymeleaf:
     cache: false
+  mvc:
+    date-format: yyyy-mm-dd
+  http:
+    multipart:
+      # 最大支持文件大小
+      max-file-size: 10MB
+      # 最大支持请求大小
+      max-request-size: 10Mb
 #  项目名
 server:
   context-path: /eim_firm_web

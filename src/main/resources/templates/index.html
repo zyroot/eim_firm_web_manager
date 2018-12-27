@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="common/copy::common_head(~{::title})">
+    <title>管理主界面</title>
+</head>
+<style>
+	/*控制自定义图标颜色*/
+	.fa-credit-card-alt{
+		color:#C75252;
+	}
+	.fa-user{
+		color:black;
+	}
+	.fa-refresh{
+		color: green;
+	}
+</style>
+<body class="easyui-layout">
+	<!--上边-->
+	<div data-options="region:'north',border:false" style="height:60px;padding:0px">
+		<div class="easyui-panel c6"  fit=true style="padding:5px;padding-top: 10px;">
+			<a th:href="@{http://app.i-mineral.cn/eim_staticpage/}" class="easyui-linkbutton c1" data-options="plain:true,width:120,height:40" style="margin-left: 20px;">
+				<i class="fa fa-home fa-3x"></i>&nbsp;&nbsp;官网首页
+			</a>
+			<a href="#" class="easyui-menubutton c1" data-options="menu:'#mm1',iconCls:'fa fa-edit fa-lg'" style="margin-left: 50px;">
+				&nbsp;&nbsp;未定义功能
+			</a>
+			<a href="#" class="easyui-menubutton c1" data-options="menu:'#mm2'" style="margin-left: 20px;">
+				<i class="fa fa-wrench fa-lg"></i>&nbsp;&nbsp;控制面板
+			</a>
+			<a href="#" class="easyui-menubutton c1" data-options="menu:'#mm3'" style="margin-left: 20px;">
+				<i class="fa fa-handshake-o fa-lg"></i>&nbsp;&nbsp;关于我们
+			</a>
+			<div align="center" style="float:right;margin-top: 10px;margin-right: 120px;">
+				<a>
+					<i class="fa fa-user fa-2x"></i>&nbsp;&nbsp;[[${#session.getAttribute('user')}]]:欢迎你！
+				</a>
+			</div>
+			<div style="clear: both;"></div>
+		</div>
+		<div id="mm1" style="width:150px;">
+			<div data-options="iconCls:'icon-undo'">Undo</div>
+			<div data-options="iconCls:'icon-redo'">Redo</div>
+			<div class="menu-sep"></div>
+			<div>Cut</div>
+			<div>Copy</div>
+			<div>Paste</div>
+			<div class="menu-sep"></div>
+			<div>
+				<span>Toolbar</span>
+				<div>
+					<div>Address</div>
+					<div>Link</div>
+					<div>Navigation Toolbar</div>
+					<div>Bookmark Toolbar</div>
+					<div class="menu-sep"></div>
+					<div>New Toolbar...</div>
+				</div>
+			</div>
+			<div data-options="iconCls:'icon-remove'">Delete</div>
+			<div>Select All</div>
+		</div>
+		<div id="mm2" style="width:100px;">
+			<div id="modifyPwd" iconCls="fa fa-credit-card-alt">修改密码</div>
+			<div iconCls="fa fa-user-circle fa-lg">联系管理员</div>
+			<div id="signout" iconCls="fa fa-sign-out fa-lg">退出登录</div>
+		</div>
+		<div id="mm3">
+			<div>History</div>
+			<div>Faq</div>
+			<div>Our Team</div>
+		</div>
+	</div>
+	<!--左边-->
+	<div data-options="region:'west',split:true,title:'菜单'" iconCls='fa fa-list' style="width:200px;">
+		<!--容器-->
+		<div id="menu1" class="easyui-accordion" fit=true style="width:300px;height:200px;">
+			<!--面板1-->
+			<div title="线上管理" data-options="iconCls:'fa fa-refresh fa-lg',selected:false" align="center">
+		        <a id="my1" title="h5/h5.do" iconCls="fa fa-tag fa-lg" class="easyui-linkbutton c6 tabs"  style="width: 100%;margin-top: 5px;">
+		        	H5案例
+		        </a>
+		         <a href="#" title="h5/h5.do" iconCls="fa fa-tag fa-lg" class="easyui-linkbutton c6 tabs" style="width: 100%;margin-top: 5px;">
+		        	文章案例
+		        </a>
+		         <a href="#" title="h5/h5.do" iconCls="fa fa-tag fa-lg"  class="easyui-linkbutton c6 tabs" style="width: 100%;margin-top: 5px;">
+		        	海报案例
+		        </a>
+		    </div>
+		    <!--面板2-->
+		    <div title="线下管理" data-options="iconCls:'fa fa-refresh fa-lg',selected:false" align="center">
+				<a i title="ifr1.html" href="#" class="easyui-linkbutton c3 tabs" style="width: 70%;margin-top: 5px;">
+					<i class="fa fa-handshake-o fa-lg"></i>&nbsp;&nbsp;线下案例
+				</a>
+				<a href="#" title="ifr1.html" class="easyui-linkbutton c4 tabs" style="width: 70%;margin-top: 5px;">
+					<i class="fa fa-handshake-o fa-lg"></i>&nbsp;&nbsp;品牌管理
+				</a>
+		    </div>
+		    <!--面板3-->
+		    <div title="加入我们" data-options="iconCls:'fa fa-refresh fa-lg',selected:false" align="center">
+				<a i title="ifr1.html" href="#" class="easyui-linkbutton c3 tabs" style="width: 70%;margin-top: 5px;">
+					<i class="fa fa-handshake-o fa-lg"></i>&nbsp;&nbsp;人才招聘
+				</a>
+		    </div>
+		</div>
+	</div>
+	<!--底部-->
+	<div data-options="region:'south',border:false" style="height:30px;padding:10px;" class="c6">
+		<div align="center">
+			由郑大侠开发制作
+		</div>
+	</div>
+	<!--中心内容-->
+	<div data-options="region:'center',title:'窗口列表'" iconCls='fa fa-tags'>
+		<div id="tabs" class="easyui-tabs" fit=true style="width:500px;height:250px;">   
+		    <div title="欢迎页" style="padding:20px;display:none;">   
+		        <iframe style="width: 100%;height: 100%;" src="welcome.html"></iframe>
+		    </div>   
+		</div>  
+	</div>
+	<!--修改密码对话框-->
+			<div id="dlg" class="easyui-dialog" title="---修改密码" style="width:500px;height:500px;padding:10px"
+			data-options="
+				iconCls: 'fa fa-key fa-lg',
+				closable:true,
+				closed:true,
+				modal:true">
+				<!--中心内容-->
+				<div align="center" style="margin-top: 20px;">
+					<div>
+						<img src="img/b.png" />
+					</div>
+					<div class="easyui-panel" style="width:400px;padding:50px 60px;border: 0px;">
+						<div align="center" style="margin-bottom: 20px;">
+							<font size="2">修改密码</font>
+						</div>
+						<div style="margin-bottom:20px" >
+							<input class="easyui-textbox" prompt="用户名"  iconWidth="28" style="width:100%;height:34px;padding:10px;">
+						</div>
+						<div style="margin-bottom:20px">
+							<input id="oldpass" class="easyui-passwordbox" prompt="旧密码" iconWidth="28" style="width:100%;height:34px;padding:10px">
+						</div>
+						<div style="margin-bottom:20px">
+							<input id="pass" class="easyui-passwordbox" prompt="新密码" iconWidth="28" style="width:100%;height:34px;padding:10px">
+						</div>
+						<div style="margin-bottom:20px">
+							<input class="easyui-passwordbox" prompt="确认你的新密码" iconWidth="28" validType="confirmPass['#pass']" style="width:100%;height:34px;padding:10px">
+						</div>
+						<div align="center">
+							<a style="margin-left: 0px;" class="easyui-linkbutton">
+								<i class="fa fa-pencil fa-lg"></i>&nbsp;&nbsp;确认修改
+							</a>
+							<a id="cancelMdPwd" style="margin-left: 50px;" class="easyui-linkbutton">
+								<i class="fa fa-mail-reply-all fa-lg"></i>&nbsp;&nbsp;取消修改 
+							</a>
+						</div>
+					</div>
+				</div>
+				<!--中心内容结束-->
+			</div>
+			<style>
+				/*秘钥颜色*/
+		    	.fa-key{
+		    		color: #DE8033;
+		    	}
+		    </style>
+			<script type="text/javascript">
+				//密码核对
+				$.extend($.fn.validatebox.defaults.rules, {
+					confirmPass: {
+						validator: function(value, param){
+							var pass = $(param[0]).passwordbox('getValue');
+							return value == pass;
+						},
+						message: '确认密码不匹配.'
+					}
+				})    
+			</script>
+	<!--修改密码对话框-->
+	<script>
+		$(function(){
+			$.messager.show({
+				title:'欢迎',
+				msg:'欢迎你：[[${#session.getAttribute("user")}]]超级管理员。',
+				timeout:3000,
+				showType:'slide'
+			});
+
+			$("#upload").click(function(){
+				$.messager.alert("ddd","aa");
+			});
+			$("#menu1").accordion({    
+			    animate:true
+			});  
+			
+			//a标签所有 有tabs类的 增加 选项卡
+			$("a").click(function(){
+				//判断拥有class--tabs的选项卡
+				if($(this).hasClass("tabs")){
+					var text = $(this).text();
+					var src = $(this).attr("title");
+					addtabs(text,src);
+				}
+			});
+			
+			//修改密码、
+			$("#modifyPwd").click(function(){
+				$.messager.confirm('确认对话框', '您确定修改密码吗？', function(r){
+					if (r){
+					    // 修改操作;
+					    $("#dlg").dialog('open',true);
+					}
+				});
+			})
+			//取消修改密码
+			$("#cancelMdPwd").click(function(){
+				$("#dlg").dialog('close',true);
+			})
+			
+			//signout 注销登录
+			$("#signout").click(function(){
+				$.messager.confirm('确认对话框', '您想要退出该系统吗？', function(r){
+					if (r){
+					    // 退出操作;
+					    alert("退出系统");
+					}
+				});
+			})
+		})
+		// 添加 选项ka公共方法
+		function addtabs(titl,src){
+			//判断是否存在
+			if($("#tabs").tabs("exists",titl)){
+				$("#tabs").tabs("select",titl);
+			}else{
+				$('#tabs').tabs('add',{    
+				    title:titl,    
+				    /*内嵌界面*/
+				    content:'<iframe frameborder=0 style=width:100%;height:99.5% src='+'[[@{/category/}]]'+src+'></iframe>',
+					//从URL加载远程数据内容填充到选项卡面板。
+//				    href:src,
+				    closable:true,   
+				    tabWidth:150,
+				    tabHeight:35,
+				    tools:[{    
+//				        iconCls:'icon-reload',    
+//				        handler:function(){//点击处理    
+//							// 调用 'refresh' 方法更新选项卡面板的内容
+//							var tab = $('#tabs').tabs('getSelected');  
+//							console.log(src,titl);
+////							// 获取选择的面板
+////							tab.panel('refresh', src);
+//				        }    
+				    }]    
+				}); 
+			}
+		}
+	</script>
+</body>
+</html>

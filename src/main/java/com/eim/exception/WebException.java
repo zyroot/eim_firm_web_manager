@@ -1,6 +1,6 @@
 package com.eim.exception;
 
-import com.eim.ExceptionEnums;
+import com.eim.enums.ExceptionEnums;
 
 /**
  * Created by Zy on 2018/12/24.
@@ -17,7 +17,7 @@ public class WebException extends RuntimeException{
         this.massage = enums.getMassage();
     }
 
-    public WebException(String message, Integer code) {
+    public WebException( Integer code,String message) {
         super(message);
         this.code = code;
         this.massage = message;

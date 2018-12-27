@@ -1,6 +1,6 @@
 package com.eim.service.impl;
 
-import com.eim.ExceptionEnums;
+import com.eim.enums.ExceptionEnums;
 import com.eim.dataObject.User;
 import com.eim.exception.WebException;
 import com.eim.repository.UserRepository;
